@@ -61,10 +61,10 @@ function getCatalog(res) {
                 if (err) {
                     console.log(err);
                 } else if (result.length) {
-                    res.json({users: result});
-                    return result;
+                    res.json({ users: result });
+                    db.close();                    
                 } else {
-                    //return null;
+                    db.close();
                 }
                 //Close connection
                 //db.close();
@@ -75,14 +75,14 @@ function getCatalog(res) {
             //console.log("here...");
             //console.log(rc);
             //return this.rc;
-            return "some value";
+            //return "some value";
         }
     });
     return "some value...";
 }
 
 
-function getC(){
+function getC() {
     var MongoClient = _mongodb.MongoClient;
 }
 
