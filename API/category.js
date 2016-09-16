@@ -65,7 +65,7 @@ function getCatalog(res) {
                 if (err) {
                     console.log(err);
                 } else if (result.length) {
-                    res.json({ users: result });
+                    res.json({ categories: result });
                     db.close();
                 } else {
                     db.close();

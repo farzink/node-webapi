@@ -32,7 +32,7 @@ function getCatalog(res) {
                 if (err) {
                     console.log(err);
                 } else if (result.length) {
-                    res.json({ users: result });
+                    res.json({ suppliers: result });
                     db.close();
                 } else {
                     db.close();
@@ -87,7 +87,6 @@ function initRoutes(router) {
 
     _router.post('/' + ROUTE, function(req, res) {
         var model = new models.Supplier();
-        console.log("-------------------------------------" + model);
         model.name = (req.body.name) ? req.body.name : "";
         model.email = (req.body.email) ? req.body.email : "";
         model.phone = (req.body.phone) ? req.body.phone : "";
