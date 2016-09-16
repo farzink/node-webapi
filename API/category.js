@@ -1,4 +1,5 @@
 var _mongodb;
+var _router;
 
 module.exports = create();
 
@@ -44,27 +45,73 @@ function _initData() {
 }
 
 
+function getCatalog(res) {
+    this.rc = "some value";
+    var MongoClient = _mongodb.MongoClient;
+    r = this;
+    MongoClient.connect(url, function(err, db) {
+        //console.log(rc);
+        if (err) {
+            console.log('Unable to connect to the mongoDB server. Error:', err);
+            return null;
+        } else {
+            var result = null;
+            var collection = db.collection('users');
+            collection.find({}).toArray(function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else if (result.length) {
+                    res.json({users: result});
+                    return result;
+                } else {
+                    //return null;
+                }
+                //Close connection
+                //db.close();
+            });
+
+            //console.log(collection.find({}));
+            //db.close();
+            //console.log("here...");
+            //console.log(rc);
+            //return this.rc;
+            return "some value";
+        }
+    });
+    return "some value...";
+}
+
+
+function getC(){
+    var MongoClient = _mongodb.MongoClient;
+}
+
+
+function initRoutes(router) {
+    _router.get('/', function(req, res) {
+        //res.json({ users: getCatalog() });
+        getCatalog(res);
+    });
+
+    _router.get('/res', function(req, res) {
+        res.json({ message: 'kir!!!!' });
+    });
+}
+
 
 
 function create() {
     var initData = function() {
         _initData();
     }
-    var init = function(mongodb) {
+    var init = function(router, mongodb) {
+        _router = router;
         _mongodb = mongodb;
+        initRoutes();
     }
-    var registerRoutes = function(router) {
-        router.get('/', function(req, res) {
-            res.json({ message: 'hooray! welcome to our api!' });
-        });
 
-        router.get('/res', function(req, res) {
-            res.json({ message: 'kir!!!!' });
-        });
-    }
     return {
         init: init,
-        registerRoutes: registerRoutes,
         initData: initData
     };
 };

@@ -16,15 +16,11 @@ var port = process.env.PORT || 12220; // set our port
 var router = express.Router(); // get an instance of the express Router
 
 
-//console.log(c);
-categoryApi.registerRoutes(router);
-categoryApi.init(mongodb);
-categoryApi.initData();
 
-// more routes for our API will happen here
+categoryApi.init(router, mongodb);
+//categoryApi.initData();
 
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
+
 app.use('/api', router);
 
 // START THE SERVER
