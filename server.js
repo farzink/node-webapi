@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var categoryApi = require('./API/category')
+var mongodb = require('mongodb')
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -17,6 +18,8 @@ var router = express.Router(); // get an instance of the express Router
 
 //console.log(c);
 categoryApi.registerRoutes(router);
+categoryApi.init(mongodb);
+categoryApi.initData();
 
 // more routes for our API will happen here
 
