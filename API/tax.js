@@ -5,8 +5,8 @@ var _router;
 
 module.exports = create();
 
-var COLLECTION_NAME = "MDSupplier"
-var ROUTE = "Supplier";
+var COLLECTION_NAME = "MDTax"
+var ROUTE = "Tax";
 var DB;
 
 // well, k0o0ne goshad, later on a global setting file will let us to get rid of this manual database url setting in every file :) 
@@ -41,7 +41,6 @@ function insert(model, res) {
         } else {
             console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
         }
-
         res.status("201");
         res.json({ status: "OK" });
     });
@@ -57,18 +56,10 @@ function initRoutes(router) {
         //res.json({ users: getCatalog() });
         getCatalog(res);
     });
-
-    _router.get('/res', function(req, res) {
-        //res.json({ message: 'kir!!!!' });
-        res.status("405");
-        res.json({ status: "12" });
-    });
-
     _router.post('/' + ROUTE, function(req, res) {
-        var model = new models.Supplier();
+        var model = new models.Tag();
         model.name = (req.body.name) ? req.body.name : "";
-        model.email = (req.body.email) ? req.body.email : "";
-        model.phone = (req.body.phone) ? req.body.phone : "";
+        model.percentage = (req.body.percentage) ? req.body.percentage : "";
         insert(model, res);
         //res.json({ response: req.body });
     });

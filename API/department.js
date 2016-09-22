@@ -5,8 +5,8 @@ var _router;
 
 module.exports = create();
 
-var COLLECTION_NAME = "MDSupplier"
-var ROUTE = "Supplier";
+var COLLECTION_NAME = "MDDepartment"
+var ROUTE = "Department";
 var DB;
 
 // well, k0o0ne goshad, later on a global setting file will let us to get rid of this manual database url setting in every file :) 
@@ -65,10 +65,8 @@ function initRoutes(router) {
     });
 
     _router.post('/' + ROUTE, function(req, res) {
-        var model = new models.Supplier();
+        var model = new models.Department();
         model.name = (req.body.name) ? req.body.name : "";
-        model.email = (req.body.email) ? req.body.email : "";
-        model.phone = (req.body.phone) ? req.body.phone : "";
         insert(model, res);
         //res.json({ response: req.body });
     });

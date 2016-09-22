@@ -6,6 +6,19 @@ function models() {
         _id: "",
         name: ""
     };
+    Tag.prototype = {
+        _id: "",
+        name: ""
+    };
+    Tax.prototype = {
+        _id: "",
+        name: "",
+        percentage: ""
+    };
+    Department.prototype = {
+        _id: "",
+        name: ""
+    };
     Supplier.prototype = {
         _id: "",
         name: "",
@@ -15,9 +28,19 @@ function models() {
 
     function Supplier() {}
 
+    function Tag() {}
+
+    function Department() {}
+
+
+    function Tax() {}
+
     function Category() {}
     return {
         Supplier: Supplier,
-        Category: Category
+        Category: Category,
+        Tag: Tag,
+        Department: Department,
+        Tax: Tax
     }
 }
