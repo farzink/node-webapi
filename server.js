@@ -19,7 +19,11 @@ var port = process.env.PORT || 12220; // set our port
 // =============================================================================
 var router = express.Router(); // get an instance of the express Router
 
-
+/*app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });*/
 
 categoryApi.init(router, mongodb);
 supplierApi.init(router, mongodb);

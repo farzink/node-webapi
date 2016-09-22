@@ -65,8 +65,13 @@ function getCatalog(res) {
                 if (err) {
                     console.log(err);
                 } else if (result.length) {
-                    res.json({ categories: result });
+setTimeout(function() {
+res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+                    res.json({ items: result });
                     db.close();
+}, 2000);
+
                 } else {
                     db.close();
                 }
@@ -109,6 +114,7 @@ function getC() {
 function initRoutes(router) {
     _router.get('/' + ROUTE, function(req, res) {
         //res.json({ users: getCatalog() });
+	console.log("-------------------------" + req.connection.remoteAddress);
         getCatalog(res);
     });
 

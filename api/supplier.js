@@ -32,7 +32,9 @@ function getCatalog(res) {
                 if (err) {
                     console.log(err);
                 } else if (result.length) {
-                    res.json({ suppliers: result });
+res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+                    res.json({ items: result });
                     db.close();
                 } else {
                     db.close();
