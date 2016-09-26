@@ -1,12 +1,13 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var categoryApi = require('./api/category')
-var supplierApi = require('./api/supplier')
-var departmentApi = require('./api/department')
-var taxApi = require('./api/tax')
-var tagApi = require('./api/tag')
-var mongodb = require('mongodb')
+var categoryApi = require('./api/category');
+var supplierApi = require('./api/supplier');
+var departmentApi = require('./api/department');
+var taxApi = require('./api/tax');
+var tagApi = require('./api/tag');
+var mongodb = require('mongodb');
+var colors = require('colors');
 
 
 // configure app to use bodyParser()
@@ -28,7 +29,7 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 
-    console.log(new Date() + "    |---------  Request is comming from :" + req.connection.remoteAddress + " -----------");
+    console.log(colors.yellow(new Date()) + "    |---------  Request is comming from :" + colors.green.underline(req.connection.remoteAddress) + " -----------");
     next();
 });
 
