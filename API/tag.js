@@ -35,7 +35,9 @@ function getCatalog(res) {
 
 function SearchByTag(tag, res) {
     var collection = DB.collection(COLLECTION_NAME);
-    collection.find({ name: /.*tag*./ }).toArray(function(err, result) {
+    var search = '"/^' + tag + '.*/"';
+    console.log(search);
+    collection.find({ name: { $regex: new RegExp('^' + tag) } }).toArray(function(err, result) {
         if (err) {
             console.log(err);
         } else if (result.length) {
