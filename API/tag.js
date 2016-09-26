@@ -24,7 +24,7 @@ function getCatalog(res) {
         if (err) {
             console.log(err);
         } else if (result.length) {
-            res.json({ items: result });
+            res.json({ success: true, results: result });
         } else {
 
         }
