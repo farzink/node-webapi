@@ -28,7 +28,7 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 
-    console.log("---------  Request is comming from :" + req.connection.remoteAddress + " -----------");
+    console.log(new Date() + "    |---------  Request is comming from :" + req.connection.remoteAddress + " -----------");
     next();
 });
 

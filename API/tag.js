@@ -39,7 +39,7 @@ function insert(model, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+            console.log('Inserted %d documents into the "tags" collection. The documents inserted with "_id" are:', result.length, result);
         }
         res.status("201");
         res.json({ status: "OK" });
@@ -59,6 +59,8 @@ function initRoutes(router) {
     _router.post('/' + ROUTE, function(req, res) {
         var model = new models.Tag();
         model.name = (req.body.name) ? req.body.name : "";
+        model.value = (req.body.value) ? req.body.value : "";
+        model.text = (req.body.text) ? req.body.text : "";
         insert(model, res);
         //res.json({ response: req.body });
     });

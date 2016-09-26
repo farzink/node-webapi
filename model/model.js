@@ -8,7 +8,9 @@ function models() {
     };
     Tag.prototype = {
         _id: "",
-        name: ""
+        name: "",
+        value: "",
+        text: ""        
     };
     Tax.prototype = {
         _id: "",

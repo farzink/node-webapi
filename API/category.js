@@ -69,7 +69,7 @@ function insert(model, res) {
                 } else {
                     console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
                 }
-                
+
                 res.status("201");
                 res.json({
                     status: "OK"
