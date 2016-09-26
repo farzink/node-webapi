@@ -1,4 +1,5 @@
 var models = require('../model/model')
+iconv = require('iconv-lite');
 
 var _mongodb;
 var _router;
@@ -31,6 +32,20 @@ function getCatalog(res) {
     });
 }
 
+
+function SearchByTag(tag, res) {
+    var collection = DB.collection(COLLECTION_NAME);
+    collection.find({ name: /.*tag*./ }).toArray(function(err, result) {
+        if (err) {
+            console.log(err);
+        } else if (result.length) {
+            res.json({ success: true, results: result });
+        } else {
+
+        }
+    });
+}
+
 function insert(model, res) {
     delete model.__proto__._id;
     console.log(model.prototype);
@@ -52,9 +67,15 @@ function getC() {
 
 
 function initRoutes(router) {
-    _router.get('/' + ROUTE, function(req, res) {
+    _router.get('/' + ROUTE + "/", function(req, res) {
         //res.json({ users: getCatalog() });
+        console.log("-----body : " + req.query.search);
         getCatalog(res);
+    });
+    _router.get('/' + ROUTE + "/:search", function(req, res) {
+        //res.json({ users: getCatalog() });
+        console.log("-----search : " + iconv.decode(new Buffer(req.params.search), "ISO-8859-1"));
+        SearchByTag(req.params.search, res);
     });
     _router.post('/' + ROUTE, function(req, res) {
         var model = new models.Tag();
