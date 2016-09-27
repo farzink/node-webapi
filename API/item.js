@@ -1,7 +1,7 @@
 var models = require('../model/model')
-var tagRepo = require('../API/tag')
-var departmentRepo = require('../API/department')
-var categoryRepo = require('../API/category')
+var tagRepo;
+var departmentRepo;
+var categoryRepo;
 
 var _mongodb;
 var _router;
@@ -60,15 +60,15 @@ function insert(model, res) {
                 model.itemcategory = data;
 
                 var collection = DB.collection(COLLECTION_NAME);
-            collection.insert([model], function(err, result) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
-                }
-                res.status("201");
-                res.json({ status: model });
-            });
+                collection.insert([model], function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
+                    }
+                    res.status("201");
+                    res.json({ status: model });
+                });
             };
             model.itemcategory = categoryRepo.getDocument(model.itemcategory, __cb);
 
@@ -119,9 +119,12 @@ function create() {
     var initData = function() {
         _initData();
     }
-    var init = function(router, mongodb) {
+    var init = function(router, mongodb, tagrepo, departmentrepo, categoryrepo) {
         _router = router;
         _mongodb = mongodb;
+        tagRepo = tagrepo;
+        departmentRepo = departmentrepo;
+        categoryRepo = categoryrepo;
         initDb();
         initRoutes();
     }
