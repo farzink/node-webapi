@@ -6,6 +6,7 @@ var supplierApi = require('./api/supplier');
 var departmentApi = require('./api/department');
 var taxApi = require('./api/tax');
 var tagApi = require('./api/tag');
+var itemApi = require('./api/item');
 var mongodb = require('mongodb');
 var colors = require('colors');
 
@@ -42,6 +43,7 @@ supplierApi.init(router, mongodb);
 tagApi.init(router, mongodb);
 departmentApi.init(router, mongodb);
 taxApi.init(router, mongodb);
+itemApi.init(router, mongodb);
 //categoryApi.initData();
 
 

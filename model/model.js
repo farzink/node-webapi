@@ -10,7 +10,7 @@ function models() {
         _id: "",
         name: "",
         value: "",
-        text: ""        
+        text: ""
     };
     Tax.prototype = {
         _id: "",
@@ -27,6 +27,14 @@ function models() {
         email: "",
         phone: ""
     };
+    Item.prototype = {
+        _id: "",
+        name: "",
+        itemsku: "",
+        itemtag: "",
+        itemdepartment: "",
+        itemcategory: ""
+    };
 
     function Supplier() {}
 
@@ -38,11 +46,15 @@ function models() {
     function Tax() {}
 
     function Category() {}
+
+
+    function Item() {}
     return {
         Supplier: Supplier,
         Category: Category,
         Tag: Tag,
         Department: Department,
-        Tax: Tax
+        Tax: Tax,
+        Item: Item
     }
 }
