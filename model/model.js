@@ -29,7 +29,7 @@ function models() {
     };
     Item.prototype = {
         _id: "",
-        name: "",
+        itemname: "",
         itemsku: "",
         itemtag: "",
         itemdepartment: "",
