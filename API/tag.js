@@ -16,7 +16,40 @@ var DB;
 var url = 'mongodb://localhost:27017/nodejs';
 //var url = 'mongodb://52.6.167.164:27017/nodejs';
 
+function _getDocument(model, res) {
+    var collection = DB.collection(COLLECTION_NAME);
+    console.log(model);
+    var q = model.map(function(item) {
+        return { "name": item };
+    });
+    collection.find({ $or: q }).toArray(function(err, result) {
+        if (err) {
+            console.log(err);
+        } else if (result.length) {
+            res.json({ success: true, results: result });
+        } else {
 
+        }
+    });
+}
+
+
+function getDocument(model, cb) {
+    var collection = DB.collection(COLLECTION_NAME);
+    console.log(model);
+    var q = model.map(function(item) {
+        return { "name": item };
+    });
+    collection.find({ $or: q }).toArray(function(err, result) {
+        if (err) {
+            console.log(err);
+        } else if (result.length) {
+            cb(result);
+        } else {
+
+        }
+    });
+}
 
 
 function getCatalog(res) {
@@ -87,6 +120,13 @@ function initRoutes(router) {
         insert(model, res);
         //res.json({ response: req.body });
     });
+
+
+    _router.post('/' + ROUTE + '/check', function(req, res) {
+        var model = (req.body.data) ? req.body.data : "";
+        _getDocument(model, res);
+        //res.json({ response: req.body });
+    });
 }
 
 function initDb() {
@@ -113,6 +153,7 @@ function create() {
 
     return {
         init: init,
-        initData: initData
+        initData: initData,
+        getDocument: getDocument
     };
 };

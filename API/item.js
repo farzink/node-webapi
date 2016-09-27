@@ -1,4 +1,7 @@
 var models = require('../model/model')
+var tagRepo = require('../API/tag')
+var departmentRepo = require('../API/department')
+var categoryRepo = require('../API/category')
 
 var _mongodb;
 var _router;
@@ -31,19 +34,52 @@ function getCatalog(res) {
     });
 }
 
+// var collection = DB.collection(COLLECTION_NAME);
+//         collection.insert([model], function(err, result) {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
+//             }
+//             res.status("201");
+//             res.json({ status: model });
+//         });
+
+
+
+
 function insert(model, res) {
     delete model.__proto__._id;
-    console.log(model.prototype);
-    var collection = DB.collection(COLLECTION_NAME);
-    collection.insert([model], function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
-        }
-        res.status("201");
-        res.json({ status: model });
-    });
+    //console.log(model.prototype);
+    var cb = function(data) {
+        model.itemtag = data;
+        var _cb = function(data) {
+            model.itemdepartment = data;
+
+            var __cb = function(data) {
+                model.itemcategory = data;
+
+                var collection = DB.collection(COLLECTION_NAME);
+            collection.insert([model], function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
+                }
+                res.status("201");
+                res.json({ status: model });
+            });
+            };
+            model.itemcategory = categoryRepo.getDocument(model.itemcategory, __cb);
+
+        };
+        model.itemdepartment = departmentRepo.getDocument(model.itemdepartment, _cb);
+
+
+
+
+    };
+    model.itemtag = tagRepo.getDocument(model.itemtag, cb);
 }
 
 function getC() {

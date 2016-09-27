@@ -1,5 +1,5 @@
 var models = require('../model/model')
-
+var mongodb = require('mongodb')
 var _mongodb;
 var _router;
 
@@ -9,7 +9,21 @@ var COLLECTION_NAME = "MDCategory"
 var ROUTE = "Category";
 var DB;
 
-
+function getDocument(model, cb) {
+    var collection = DB.collection(COLLECTION_NAME);
+    console.log(new mongodb.ObjectID());
+    collection.findOne({ _id: new mongodb.ObjectID(model) }, function(err, result) {
+        if (err) {
+            console.log("------------------error---------------------------")
+            console.log(err);
+        } else if (result != null) {
+            console.log("----------------------result----------------------------")
+            cb(result);
+        } else {
+            console.log("-------------------------nothing-------------------------")
+        }
+    });
+}
 
 
 var url = 'mongodb://localhost:27017/nodejs';
@@ -130,6 +144,7 @@ function create() {
 
     return {
         init: init,
-        initData: initData
+        initData: initData,
+        getDocument: getDocument
     };
 };
