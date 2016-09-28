@@ -32,7 +32,8 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
     var ip = req.connection.remoteAddress.split(":");
-    logger(ip[ip.length-1]);
+    logger.log(ip[ip.length - 1]);
+    //logger.log("66.4.35.4");
 
     console.log(colors.yellow(new Date()) + "    |---------  Request is comming from :" + colors.green.underline(req.connection.remoteAddress) + " -----------");
     next();
