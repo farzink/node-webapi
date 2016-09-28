@@ -7,7 +7,9 @@ var departmentApi = require('./api/department');
 var taxApi = require('./api/tax');
 var tagApi = require('./api/tag');
 var itemApi = require('./api/item');
+var pricetypeApi = require('./api/pricetype');
 var mongodb = require('mongodb');
+var logger = require('./lib/logger');
 var colors = require('colors');
 
 
@@ -24,11 +26,13 @@ var port = process.env.PORT || 12220; // set our port
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router(); // get an instance of the express Router
-
+logger.init(mongodb);
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
+    var ip = req.connection.remoteAddress.split(":");
+    logger(ip[ip.length-1]);
 
     console.log(colors.yellow(new Date()) + "    |---------  Request is comming from :" + colors.green.underline(req.connection.remoteAddress) + " -----------");
     next();
@@ -43,7 +47,8 @@ supplierApi.init(router, mongodb);
 tagApi.init(router, mongodb);
 departmentApi.init(router, mongodb);
 taxApi.init(router, mongodb);
-itemApi.init(router, mongodb, tagApi, departmentApi, categoryApi);
+pricetypeApi.init(router, mongodb);
+itemApi.init(router, mongodb, tagApi, departmentApi, categoryApi, taxApi);
 //categoryApi.initData();
 
 

@@ -1,5 +1,5 @@
 var models = require('../model/model')
-
+var mongodb = require('mongodb')
 var _mongodb;
 var _router;
 
@@ -14,7 +14,20 @@ var DB;
 
 var url = 'mongodb://localhost:27017/nodejs';
 //var url = 'mongodb://52.6.167.164:27017/nodejs';
-
+function getDocument(model, cb) {
+    var collection = DB.collection(COLLECTION_NAME);
+    collection.findOne({ _id: new mongodb.ObjectID(model) }, function(err, result) {
+        if (err) {
+            console.log("------------------error---------------------------")
+            console.log(err);
+        } else if (result != null) {
+            console.log("----------------------result----------------------------")
+            cb(result);
+        } else {
+            console.log("-------------------------nothing-------------------------")
+        }
+    });
+}
 
 
 
@@ -89,6 +102,7 @@ function create() {
 
     return {
         init: init,
-        initData: initData
+        initData: initData,
+        getDocument: getDocument
     };
 };

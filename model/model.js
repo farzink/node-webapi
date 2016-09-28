@@ -12,6 +12,10 @@ function models() {
         value: "",
         text: ""
     };
+    PriceType.prototype = {
+        _id: "",
+        name: ""
+    };
     Tax.prototype = {
         _id: "",
         name: "",
@@ -53,6 +57,9 @@ function models() {
     function Category() {}
 
 
+    function PriceType() {}
+
+
     function Item() {}
     return {
         Supplier: Supplier,
@@ -60,6 +67,7 @@ function models() {
         Tag: Tag,
         Department: Department,
         Tax: Tax,
-        Item: Item
+        Item: Item,
+        PriceType: PriceType
     }
 }

@@ -2,6 +2,7 @@ var models = require('../model/model')
 var tagRepo;
 var departmentRepo;
 var categoryRepo;
+var taxRepo;
 
 var _mongodb;
 var _router;
@@ -59,16 +60,28 @@ function insert(model, res) {
             var __cb = function(data) {
                 model.itemCategory = data;
 
-                var collection = DB.collection(COLLECTION_NAME);
-                collection.insert([model], function(err, result) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
+                var ___cb = function(data) {
+                    model.taxType = data;
+
+
+
+                    var collection = DB.collection(COLLECTION_NAME);
+
+                    if (model.taxType.percentage) {
+                        console.log("has percentage");
+                        model.taxedPrice = model.price + (model.price * model.taxType.percentage / 100);
                     }
-                    res.status("201");
-                    res.json({ status: true, statusCode: 201, item: model });
-                });
+                    collection.insert([model], function(err, result) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
+                        }
+                        res.status("201");
+                        res.json({ status: true, statusCode: 201, item: model });
+                    });
+                }
+                model.taxType = taxRepo.getDocument(model.taxType, ___cb);
             };
             model.itemCategory = categoryRepo.getDocument(model.itemCategory, __cb);
 
@@ -124,10 +137,11 @@ function create() {
     var initData = function() {
         _initData();
     }
-    var init = function(router, mongodb, tagrepo, departmentrepo, categoryrepo) {
+    var init = function(router, mongodb, tagrepo, departmentrepo, categoryrepo, taxrepo) {
         _router = router;
         _mongodb = mongodb;
         tagRepo = tagrepo;
+        taxRepo = taxrepo;
         departmentRepo = departmentrepo;
         categoryRepo = categoryrepo;
         initDb();
