@@ -1,4 +1,5 @@
 var models = require('../model/model')
+var mongodb = require('mongodb');
 var tagRepo;
 var departmentRepo;
 var categoryRepo;
@@ -46,7 +47,21 @@ function getCatalog(res) {
 //             res.json({ status: model });
 //         });
 
-
+function getDocumentById(id, res) {
+    var collection = DB.collection(COLLECTION_NAME);
+    collection.findOne({ _id: new mongodb.ObjectID(id) }, function(err, result) {
+        if (err) {
+            console.log("------------------error---------------------------")
+            console.log(err);
+        } else if (result != null) {
+            console.log("----------------------result----------------------------")
+            res.status("201");
+            res.json({ status: true, statusCode: 201, item: result });
+        } else {
+            console.log("-------------------------nothing-------------------------")
+        }
+    });
+}
 
 
 function insert(model, res) {
@@ -104,6 +119,10 @@ function initRoutes(router) {
     _router.get('/' + ROUTE, function(req, res) {
         //res.json({ users: getCatalog() });
         getCatalog(res);
+    });
+    _router.get('/' + ROUTE + "/:id", function(req, res) {
+        //res.json({ users: getCatalog() });
+        getDocumentById(req.params.id, res);
     });
     _router.post('/' + ROUTE, function(req, res) {
         var model = new models.Item();

@@ -38,7 +38,7 @@ function getDocument(model, cb) {
     var collection = DB.collection(COLLECTION_NAME);
     console.log(model);
     var q = model.map(function(item) {
-        return { "name": item };
+        return { "value": item };
     });
     collection.find({ $or: q }).toArray(function(err, result) {
         if (err) {
