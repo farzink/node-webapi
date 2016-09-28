@@ -52,12 +52,12 @@ function insert(model, res) {
     delete model.__proto__._id;
     //console.log(model.prototype);
     var cb = function(data) {
-        model.itemtag = data;
+        model.itemTag = data;
         var _cb = function(data) {
-            model.itemdepartment = data;
+            model.itemDepartment = data;
 
             var __cb = function(data) {
-                model.itemcategory = data;
+                model.itemCategory = data;
 
                 var collection = DB.collection(COLLECTION_NAME);
                 collection.insert([model], function(err, result) {
@@ -67,19 +67,19 @@ function insert(model, res) {
                         console.log('Inserted %d documents into the "items" collection. The documents inserted with "_id" are:', result.length, result);
                     }
                     res.status("201");
-                    res.json({ status: model });
+                    res.json({ status: true, statusCode: 201, item: model });
                 });
             };
-            model.itemcategory = categoryRepo.getDocument(model.itemcategory, __cb);
+            model.itemCategory = categoryRepo.getDocument(model.itemCategory, __cb);
 
         };
-        model.itemdepartment = departmentRepo.getDocument(model.itemdepartment, _cb);
+        model.itemDepartment = departmentRepo.getDocument(model.itemDepartment, _cb);
 
 
 
 
     };
-    model.itemtag = tagRepo.getDocument(model.itemtag, cb);
+    model.itemTag = tagRepo.getDocument(model.itemTag, cb);
 }
 
 function getC() {
@@ -94,11 +94,16 @@ function initRoutes(router) {
     });
     _router.post('/' + ROUTE, function(req, res) {
         var model = new models.Item();
-        model.itemname = (req.body.itemname) ? req.body.itemname : "";
-        model.itemsku = (req.body.itemsku) ? req.body.itemsku : "";
-        model.itemtag = (req.body.itemtag) ? req.body.itemtag : "";
-        model.itemdepartment = (req.body.itemdepartment) ? req.body.itemdepartment : "";
-        model.itemcategory = (req.body.itemcategory) ? req.body.itemcategory : "";
+        model.itemName = (req.body.itemName) ? req.body.itemName : "";
+        model.itemSku = (req.body.itemSku) ? req.body.itemSku : "";
+        model.itemTag = (req.body.itemTag) ? req.body.itemTag : "";
+        model.itemDepartment = (req.body.itemDepartment) ? req.body.itemDepartment : "";
+        model.itemCategory = (req.body.itemCategory) ? req.body.itemCategory : "";
+        model.priceType = (req.body.priceType) ? req.body.priceType : "";
+        model.cost = (req.body.cost) ? req.body.cost : "";
+        model.taxType = (req.body.taxType) ? req.body.taxType : "";
+        model.price = (req.body.price) ? req.body.price : "";
+        model.taxedPrice = (req.body.taxedPrice) ? req.body.taxedPrice : "";
         insert(model, res);
         //res.json({ response: req.body });
     });

@@ -29,11 +29,16 @@ function models() {
     };
     Item.prototype = {
         _id: "",
-        itemname: "",
-        itemsku: "",
-        itemtag: "",
-        itemdepartment: "",
-        itemcategory: ""
+        itemName: "",
+        itemSku: "",
+        itemTag: "",
+        itemDepartment: "",
+        itemCategory: "",
+        priceType: "",
+        cost: "",
+        taxType: "",
+        price: "",
+        taxedPrice: ""
     };
 
     function Supplier() {}
