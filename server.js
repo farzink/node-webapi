@@ -43,7 +43,7 @@ supplierApi.init(router, mongodb);
 tagApi.init(router, mongodb);
 departmentApi.init(router, mongodb);
 taxApi.init(router, mongodb);
-itemApi.init(router, mongodb);
+itemApi.init(router, mongodb, tagApi, departmentApi, categoryApi);
 //categoryApi.initData();
 
 
