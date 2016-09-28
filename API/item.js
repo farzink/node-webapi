@@ -86,6 +86,7 @@ function insert(model, res) {
                         console.log("has percentage");
                         model.taxedPrice = parseInt(model.taxedPrice);
                         model.taxType.percentage = parseFloat(model.taxType.percentage);
+                        model.price = parseFloat(model.price);
                         model.taxedPrice = model.price + (model.price * model.taxType.percentage / 100);
                     }
                     collection.insert([model], function(err, result) {
