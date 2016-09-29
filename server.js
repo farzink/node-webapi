@@ -33,7 +33,7 @@ app.all('/*', function(req, res, next) {
 
     var ip = req.connection.remoteAddress.split(":");
     logger.log(ip[ip.length - 1], req);
-    //logger.log("66.4.35.4");
+    //logger.log("66.4.35.4", req);
 
     console.log(colors.yellow(new Date()) + "    |---------  Request is comming from :" + colors.green.underline(req.connection.remoteAddress) + " -----------");
     next();
