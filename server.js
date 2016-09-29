@@ -32,7 +32,7 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "content-type");
 
     var ip = req.connection.remoteAddress.split(":");
-    logger.log(ip[ip.length - 1]);
+    logger.log(ip[ip.length - 1], req);
     //logger.log("66.4.35.4");
 
     console.log(colors.yellow(new Date()) + "    |---------  Request is comming from :" + colors.green.underline(req.connection.remoteAddress) + " -----------");
