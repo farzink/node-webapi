@@ -102,9 +102,9 @@ function getC() {
 
 
 function initRoutes(router) {
-    _router.get('/' + ROUTE + "/", function(req, res) {
+    _router.get('/' + ROUTE , function(req, res) {
         //res.json({ users: getCatalog() });
-        console.log("-----body : " + req.query.search);
+        //console.log("-----body : " + req.query.search);
         getCatalog(res);
     });
     _router.get('/' + ROUTE + "/:search", function(req, res) {
