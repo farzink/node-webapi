@@ -1,5 +1,6 @@
 var models = require('../model/model')
 iconv = require('iconv-lite');
+var mongodb = require('mongodb')
 
 var _mongodb;
 var _router;
@@ -82,18 +83,44 @@ function SearchByTag(tag, res) {
 }
 
 function insert(model, res) {
-    delete model.__proto__._id;
-    console.log(model.prototype);
+    //delete model.__proto__._id;    
+
     var collection = DB.collection(COLLECTION_NAME);
-    collection.insert([model], function(err, result) {
+    collection.find({ "name": model.name }).toArray(function(err, result) {
         if (err) {
             console.log(err);
+            console.log(err);
+            res.status("500");
+            res.json({ status: "failed" });
+        } else if (result.length) {
+            res.json({ success: false, internalErrorCode: 12222, internalErrorDescription: "Item with this name already exists!" });
         } else {
-            console.log('Inserted %d documents into the "tags" collection. The documents inserted with "_id" are:', result.length, result);
+            model._id = new mongodb.ObjectID();
+            model.value = model._id;
+            collection.insert([model], function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.status("500");
+                    res.json({ status: "failed" });
+                } else {
+                    console.log('Inserted %d documents into the "tags" collection. The documents inserted with "_id" are:', result.length, result);
+                }
+                res.status("201");
+                res.json({ status: "OK" });
+            });
+
+
+
         }
-        res.status("201");
-        res.json({ status: "OK" });
     });
+
+
+
+
+
+
+
+
 }
 
 function getC() {
@@ -102,7 +129,7 @@ function getC() {
 
 
 function initRoutes(router) {
-    _router.get('/' + ROUTE , function(req, res) {
+    _router.get('/' + ROUTE, function(req, res) {
         //res.json({ users: getCatalog() });
         //console.log("-----body : " + req.query.search);
         getCatalog(res);
@@ -113,10 +140,10 @@ function initRoutes(router) {
         SearchByTag(req.params.search, res);
     });
     _router.post('/' + ROUTE, function(req, res) {
-        var model = new models.Tag();
+        var model = new models.Tag();        
         model.name = (req.body.name) ? req.body.name : "";
-        model.value = (req.body.value) ? req.body.value : "";
-        model.text = (req.body.text) ? req.body.text : "";
+        //model.value = (req.body.value) ? req.body.value : "";
+        model.text = model.name;
         insert(model, res);
         //res.json({ response: req.body });
     });
