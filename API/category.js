@@ -24,7 +24,8 @@ function getDocument(model, cb) {
         }
     });
 }
-
+//some comments
+//some other comments
 
 var url = 'mongodb://localhost:27017/nodejs';
 //var url = 'mongodb://52.6.167.164:27017/nodejs';
